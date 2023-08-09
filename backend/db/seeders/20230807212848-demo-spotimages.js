@@ -20,7 +20,7 @@ module.exports = {
      * }], {});
      */
 
-    await SpotImage.bulkCreate(
+    await SpotImage.bulkCreate([
       {
         spotId: 1,
         url: "testurl",
@@ -35,8 +35,8 @@ module.exports = {
         spotId: 3,
         url: "testurl3",
         preview: true,
-      }
-    );
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

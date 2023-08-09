@@ -20,7 +20,7 @@ module.exports = {
      * }], {});
      */
 
-    await Review.bulkCreate(
+    await Review.bulkCreate([
       {
         spotId: 1,
         userId: 1,
@@ -38,8 +38,8 @@ module.exports = {
         userId: 3,
         review: "THIS IS SO OKAY",
         stars: 3,
-      }
-    );
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

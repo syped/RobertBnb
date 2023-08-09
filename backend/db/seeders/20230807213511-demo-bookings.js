@@ -20,7 +20,7 @@ module.exports = {
      * }], {});
      */
 
-    await Booking.bulkCreate(
+    await Booking.bulkCreate([
       {
         spotId: 1,
         userId: 1,
@@ -38,8 +38,8 @@ module.exports = {
         userId: 3,
         startDate: "1992-05-03",
         endDate: "2003-01-12",
-      }
-    );
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {

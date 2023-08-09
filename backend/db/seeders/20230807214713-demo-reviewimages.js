@@ -20,7 +20,7 @@ module.exports = {
      * }], {});
      */
 
-    await ReviewImage.bulkCreate(
+    await ReviewImage.bulkCreate([
       {
         reviewId: 1,
         url: "testurl4",
@@ -32,8 +32,8 @@ module.exports = {
       {
         reviewId: 3,
         url: "testurl6",
-      }
-    );
+      },
+    ]);
   },
 
   async down(queryInterface, Sequelize) {
