@@ -5,6 +5,7 @@ const { User, Booking, Spot, SpotImage } = require("../../db/models");
 
 const { requireAuth } = require("../../utils/auth");
 
+// Get all of the Current User's Bookings
 router.get("/current", requireAuth, async (req, res) => {
   const user = await User.findByPk(req.user.id);
 
@@ -50,6 +51,7 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Bookings: bookingsList });
 });
 
+// Edit a Booking
 router.put("/:bookingId", requireAuth, async (req, res) => {
   let booking = await Booking.findByPk(req.params.bookingId);
   let user = await User.findByPk(req.user.id);
@@ -110,6 +112,7 @@ router.put("/:bookingId", requireAuth, async (req, res) => {
   res.json(booking);
 });
 
+// Delete a Booking
 router.delete("/:bookingId", requireAuth, async (req, res) => {
   let booking = await Booking.findByPk(req.params.bookingId);
   let userId = req.user.id;

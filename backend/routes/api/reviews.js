@@ -24,6 +24,7 @@ const validateReview = [
   handleValidationErrors,
 ];
 
+// Get all Reviews of the Current User
 router.get("/current", requireAuth, async (req, res) => {
   let user = await User.findByPk(req.user.id);
 
@@ -71,6 +72,7 @@ router.get("/current", requireAuth, async (req, res) => {
   res.json({ Reviews: reviewsList });
 });
 
+// Add an Image to a Review based on the Review's id
 router.post("/:reviewId/images", requireAuth, async (req, res) => {
   const review = await Review.findByPk(req.params.reviewId, {
     include: [{ model: ReviewImage }],
@@ -112,6 +114,7 @@ router.post("/:reviewId/images", requireAuth, async (req, res) => {
   }
 });
 
+// Edit a Review
 router.put("/:reviewId", requireAuth, validateReview, async (req, res) => {
   let currentReview = await Review.findByPk(req.params.reviewId);
   let user = await User.findByPk(req.user.id);
@@ -140,6 +143,7 @@ router.put("/:reviewId", requireAuth, validateReview, async (req, res) => {
   res.json(currentReview);
 });
 
+// Delete a Review
 router.delete("/:reviewId", requireAuth, async (req, res) => {
   let review = await Review.findByPk(req.params.reviewId);
   let userId = req.user.id;

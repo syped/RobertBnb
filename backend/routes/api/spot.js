@@ -9,10 +9,11 @@ const {
   ReviewImage,
   Booking,
 } = require("../../db/models");
+
 const { requireAuth } = require("../../utils/auth");
 const { handleValidationErrors } = require("../../utils/validation");
 const { check } = require("express-validator");
-const { Op, where } = require("sequelize");
+const { Op } = require("sequelize");
 
 const validateSpot = [
   check("address")
@@ -54,9 +55,11 @@ const validateReview = [
 
 const validateQuery = [
   check("page")
+    .optional()
     .isInt({ min: 1 })
     .withMessage("Page must be greater than or equal to 1"),
   check("size")
+    .optional()
     .isInt({ min: 1 })
     .withMessage("Size must be greater than or equal to 1"),
   check("maxLat")
@@ -86,6 +89,7 @@ const validateQuery = [
   handleValidationErrors,
 ];
 
+// Query filters to Get All Spots
 router.get("/", validateQuery, async (req, res) => {
   let { page, size } = req.query;
 
@@ -135,22 +139,9 @@ router.get("/", validateQuery, async (req, res) => {
   }
 
   const spots = await Spot.findAll({
+    include: [{ model: Review }, { model: SpotImage }],
     where,
     ...pagination,
-  });
-  let result = { Spots: spots };
-
-  if (page == 0) result.page = 1;
-  else result.page = parseInt(page);
-
-  result.size = parseInt(size);
-
-  res.json(result);
-});
-
-router.get("/", async (req, res) => {
-  const spots = await Spot.findAll({
-    include: [{ model: Review }, { model: SpotImage }],
   });
 
   spotsList = [];
@@ -187,9 +178,60 @@ router.get("/", async (req, res) => {
 
     delete spot.Reviews;
   });
-  res.json(spotsList);
+
+  let result = { Spots: spotsList };
+
+  if (page == 0) result.page = 1;
+  else result.page = parseInt(page);
+
+  result.size = parseInt(size);
+
+  res.json(result);
 });
 
+// router.get("/", async (req, res) => {
+//   const spots = await Spot.findAll({
+//     include: [{ model: Review }, { model: SpotImage }],
+//   });
+
+//   spotsList = [];
+//   spots.forEach((spot) => {
+//     spotsList.push(spot.toJSON());
+//   });
+
+//   spotsList.forEach((spot) => {
+//     spot.SpotImages.forEach((image) => {
+//       if (image.preview === true) {
+//         spot.previewImage = image.url;
+//       }
+//     });
+//     if (!spot.previewImage) {
+//       spot.previewImage = "no preview image found";
+//     }
+
+//     delete spot.SpotImages;
+
+//     spot.Reviews.forEach((review) => {
+//       let sum = 0;
+//       let count = 0;
+
+//       if (review) {
+//         sum += review.stars;
+//         count++;
+//       }
+//       let avg = sum / count;
+//       spot.avgRating = avg;
+//     });
+//     if (!spot.avgRating) {
+//       spot.avgRating = 0;
+//     }
+
+//     delete spot.Reviews;
+//   });
+//   res.json(spotsList);
+// });
+
+// Create a Spot
 router.post("/", requireAuth, validateSpot, async (req, res) => {
   const { address, city, state, country, lat, lng, name, description, price } =
     req.body;
@@ -211,6 +253,7 @@ router.post("/", requireAuth, validateSpot, async (req, res) => {
   return res.json(spot);
 });
 
+// Create an Image for a Spot
 router.post("/:spotId/images", requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   const user = await User.findByPk(req.user.id);
@@ -244,6 +287,7 @@ router.post("/:spotId/images", requireAuth, async (req, res) => {
   }
 });
 
+// Get Spots of Current User
 router.get("/current", async (req, res) => {
   let user = await User.findByPk(req.user.id);
 
@@ -290,6 +334,7 @@ router.get("/current", async (req, res) => {
   }
 });
 
+// Get Details of a Spot by Id
 router.get("/:spotId", async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId, {
     include: [
@@ -322,6 +367,7 @@ router.get("/:spotId", async (req, res) => {
   }
 });
 
+// Edit a Spot
 router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
   let spot = await Spot.findByPk(req.params.spotId);
   let userId = req.user.id;
@@ -367,6 +413,7 @@ router.put("/:spotId", requireAuth, validateSpot, async (req, res) => {
   res.json(spot);
 });
 
+// Delete a Spot
 router.delete("/:spotId", requireAuth, async (req, res) => {
   let spot = await Spot.findByPk(req.params.spotId);
   let userId = req.user.id;
@@ -390,6 +437,7 @@ router.delete("/:spotId", requireAuth, async (req, res) => {
   res.json({ message: "Successfully deleted" });
 });
 
+// Get all reviews by a Spot's id
 router.get("/:spotId/reviews", async (req, res) => {
   let spot = await Spot.findByPk(req.params.spotId);
 
@@ -411,6 +459,7 @@ router.get("/:spotId/reviews", async (req, res) => {
   }
 });
 
+// Create a Review for a Spot based on the Spot's id
 router.post(
   "/:spotId/reviews",
   requireAuth,
@@ -448,6 +497,7 @@ router.post(
   }
 );
 
+// Get all Bookings for a Spot based on the Spot's id
 router.get("/:spotId/bookings", requireAuth, async (req, res) => {
   const user = await User.findByPk(req.user.id);
   const spot = await Spot.findByPk(req.params.spotId);
@@ -478,6 +528,7 @@ router.get("/:spotId/bookings", requireAuth, async (req, res) => {
   }
 });
 
+// Create a Booking from a Spot based on the Spot's id
 router.post("/:spotId/bookings", requireAuth, async (req, res) => {
   const spot = await Spot.findByPk(req.params.spotId);
   const user = await User.findByPk(req.user.id);
@@ -542,67 +593,5 @@ router.post("/:spotId/bookings", requireAuth, async (req, res) => {
     res.json({ message: "Spot couldn't be found" });
   }
 });
-
-// router.get("/", validateQuery, async (req, res) => {
-//   let { page, size } = req.query;
-
-//   if (!page || page > 10 || isNaN(page)) page = 1;
-//   if (!size || size > 20 || isNaN(size)) size = 20;
-
-//   let pagination = { limit: size, offset: size * (page - 1) };
-
-//   where = {};
-
-//   let { minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
-
-//   if (minLat) {
-//     where.lat = {
-//       [Op.gte]: minLat,
-//     };
-//   }
-
-//   if (maxLat) {
-//     where.lat = {
-//       [Op.lte]: maxLat,
-//     };
-//   }
-
-//   if (minLng) {
-//     where.lng = {
-//       [Op.gte]: minLng,
-//     };
-//   }
-
-//   if (maxLng) {
-//     where.lng = {
-//       [Op.lte]: maxLng,
-//     };
-//   }
-
-//   if (minPrice) {
-//     where.price = {
-//       [Op.gte]: minPrice,
-//     };
-//   }
-
-//   if (maxPrice) {
-//     where.price = {
-//       [Op.lte]: maxPrice,
-//     };
-//   }
-
-//   const spots = await Spot.findAll({
-//     where,
-//     ...pagination,
-//   });
-//   let result = { Spots: spots };
-
-//   if (page == 0) result.page = 1;
-//   else result.page = parseInt(page);
-
-//   result.size = parseInt(size);
-
-//   res.json(result);
-// });
 
 module.exports = router;
