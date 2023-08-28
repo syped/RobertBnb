@@ -11,12 +11,26 @@ import App from './App';
 import configureStore from './store';
 
 // frontend/src/index.js
+// ... other imports
+import { restoreCSRF, csrfFetch } from './store/csrf';
+
+// frontend/src/index.js
 // ...
 const store = configureStore();
 
 if (process.env.NODE_ENV !== 'production') {
   window.store = store;
 }
+
+// ... const store = configureStore();
+
+if (process.env.NODE_ENV !== 'production') {
+  restoreCSRF();
+
+  window.csrfFetch = csrfFetch;
+  window.store = store;
+}
+
 
 // frontend/src/index.js
 // ...
