@@ -4,8 +4,12 @@ import thunk from 'redux-thunk';
 
 // frontend/src/store/index.js
 // ...
+import sessionReducer from "./session";
+
 const rootReducer = combineReducers({
+  session: sessionReducer,
 });
+// ...
 
 // frontend/src/store/index.js
 // ...
