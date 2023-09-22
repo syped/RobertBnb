@@ -1,0 +1,51 @@
+.spots {
+  display: flex;
+  gap: 20px;
+  margin-top: 150px;
+  justify-content: space-around;
+}
+
+.spot {
+  /* border: 1px solid green; */
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  opacity: 0;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+.spot:hover {
+  cursor: pointer;
+}
+
+.image > img {
+  height: 250px;
+  width: 400px;
+}
+
+.star {
+  height: 15px;
+}
+
+.city-state {
+  display: inline;
+  float: left;
+}
+
+.starReview {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  gap: 2px;
+}

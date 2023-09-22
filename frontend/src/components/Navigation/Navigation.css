@@ -1,0 +1,61 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px gray solid;
+  width: 100vw;
+  padding: 0;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+}
+
+body {
+  margin: 0;
+  height: 5000px;
+  min-width: 1024;
+}
+
+.val-logo {
+  height: 100px;
+}
+
+.logincontainer {
+  margin-right: 50px;
+}
+
+.hidden {
+  display: none;
+}
+
+.menu {
+  height: 25px;
+}
+
+.fa-user-circle {
+  font-size: 25px;
+}
+
+.profile-button {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 50px;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 50px;
+}
+
+.dropdowncontainer {
+  position: absolute;
+  right: 100px;
+  top: 80px;
+  background-color: white;
+  border: black 1px solid;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
+}

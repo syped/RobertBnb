@@ -23,17 +23,17 @@ module.exports = {
     await SpotImage.bulkCreate([
       {
         spotId: 1,
-        url: "testurl",
+        url: "https://cdn.esportsdriven.com/media/guides/images/bind_ekhbkMM.main.jpg",
         preview: true,
       },
       {
         spotId: 2,
-        url: "testurl2",
-        preview: false,
+        url: "https://gumlet.assettype.com/afkgaming%2F2023-02%2Fa9e92df9-2e7a-46dd-a31b-7f48515b91f0%2FUntitled_design___2023_02_28T194337_756.jpg?compress=true&dpr=1&w=1200",
+        preview: true,
       },
       {
         spotId: 3,
-        url: "testurl3",
+        url: "https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltee14888179d221f8/5ee7d51725b4740c330ba55d/Loading_Screen_Split_v2.jpg",
         preview: true,
       },
     ]);

@@ -1,12 +1,17 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect, useRef } from "react";
-import { useDispatch } from 'react-redux';
-import * as sessionActions from '../../store/session';
+import { useDispatch, useSelector } from "react-redux";
+import * as sessionActions from "../../store/session";
+import OpenModalButton from "../OpenModalButton";
+import LoginFormModal from "../LoginFormModal";
+import SignupFormModal from "../SignupFormModal";
+import menuicon from "../../assets/menu.svg";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const sessionUser = useSelector((state) => state.session.user);
 
   const openMenu = () => {
     if (showMenu) return;
@@ -22,7 +27,7 @@ function ProfileButton({ user }) {
       }
     };
 
-    document.addEventListener('click', closeMenu);
+    document.addEventListener("click", closeMenu);
 
     return () => document.removeEventListener("click", closeMenu);
   }, [showMenu]);
@@ -36,17 +41,45 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
-        <i className="fas fa-user-circle" />
-      </button>
-      <ul className={ulClassName} ref={ulRef}>
-        <li>{user.username}</li>
-        <li>{user.firstName} {user.lastName}</li>
-        <li>{user.email}</li>
-        <li>
-          <button onClick={logout}>Log Out</button>
-        </li>
-      </ul>
+      {sessionUser ? (
+        <>
+          <button onClick={openMenu} className="profile-button">
+            <img src={menuicon} className="menu"></img>
+            <i className="fas fa-user-circle" />
+          </button>
+          <div className={ulClassName} ref={ulRef}>
+            <div className="dropdowncontainer">
+              <li>{sessionUser.username}</li>
+              <li>
+                {sessionUser.firstName} {sessionUser.lastName}
+              </li>
+              <li>{sessionUser.email}</li>
+              <li>
+                <button onClick={logout}>Log Out</button>
+              </li>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <button onClick={openMenu} className="profile-button">
+            <img src={menuicon} className="menu"></img>
+            <i className="fas fa-user-circle" />
+          </button>
+          <div className={ulClassName} ref={ulRef}>
+            <div className="dropdowncontainer">
+              <OpenModalButton
+                buttonText="Log In"
+                modalComponent={<LoginFormModal />}
+              />
+              <OpenModalButton
+                buttonText="Sign Up"
+                modalComponent={<SignupFormModal />}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </>
   );
 }

@@ -6,41 +6,43 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
+import drink from "../../assets/drinks-svgrepo-com.png";
+import logo from "../../assets/valorantlogo.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
 
   let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
-    );
-  } else {
-    sessionLinks = (
-      <li>
-        <OpenModalButton
-          buttonText="Log In"
-          modalComponent={<LoginFormModal />}
-        />
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
-      </li>
-    );
-  }
+  //   if (sessionUser) {
+  //     sessionLinks = (
+  //       <div>
+  //         <ProfileButton user={sessionUser} />
+  //       </div>
+  //     );
+  //   } else {
+  //     sessionLinks = (
+  //       <div className="logincontainer">
+  //         <OpenModalButton
+  //           buttonText="Log In"
+  //           modalComponent={<LoginFormModal />}
+  //         />
+  //         <OpenModalButton
+  //           buttonText="Sign Up"
+  //           modalComponent={<SignupFormModal />}
+  //         />
+  //       </div>
+  //     );
+  //   }
 
   return (
-    <ul>
-      <li>
+    <div className="header">
+      <div>
         <NavLink exact to="/">
-          Home
+          <img src={logo} className="val-logo"></img>
         </NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+      </div>
+      {isLoaded && <ProfileButton></ProfileButton>}
+    </div>
   );
 }
 
