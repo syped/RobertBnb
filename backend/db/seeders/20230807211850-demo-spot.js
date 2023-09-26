@@ -60,6 +60,18 @@ module.exports = {
           "Split is a map in VALORANT and one of the first available since the Closed Beta.",
         price: 100,
       },
+      {
+        ownerId: 1,
+        address: "testing",
+        city: "test city",
+        state: "test state",
+        country: "alaska",
+        lat: 200,
+        lng: 300,
+        name: "Icebox",
+        description: "cold map",
+        price: 201,
+      },
     ]);
   },
 

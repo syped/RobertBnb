@@ -356,8 +356,12 @@ router.get("/:spotId", async (req, res) => {
     });
 
     let avg = totalStars / reviewcounter;
+    if (totalStars === 0 && reviewcounter === 0) avg = 0;
+
     if (avg % 1 === 0) spot.dataValues.avgRating = avg.toFixed(1);
     else spot.dataValues.avgRating = avg.toFixed(2);
+
+    if (avg === 0) spot.dataValues.avgRating = avg;
 
     spot.dataValues.numReviews = reviewcounter;
     // spot.dataValues.avgRating = avg;

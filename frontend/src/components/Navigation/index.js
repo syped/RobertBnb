@@ -6,7 +6,6 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
-import drink from "../../assets/drinks-svgrepo-com.png";
 import logo from "../../assets/valorantlogo.png";
 
 function Navigation({ isLoaded }) {
@@ -41,6 +40,11 @@ function Navigation({ isLoaded }) {
           <img src={logo} className="val-logo"></img>
         </NavLink>
       </div>
+      {sessionUser ? (
+        <div className="create-spot">
+          <NavLink to="/spots/new">Create a new Spot</NavLink>
+        </div>
+      ) : null}
       {isLoaded && <ProfileButton></ProfileButton>}
     </div>
   );

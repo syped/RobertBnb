@@ -36,6 +36,11 @@ module.exports = {
         url: "https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/bltee14888179d221f8/5ee7d51725b4740c330ba55d/Loading_Screen_Split_v2.jpg",
         preview: true,
       },
+      {
+        spotId: 4,
+        url: "https://static.wikia.nocookie.net/valorant/images/1/13/Loading_Screen_Icebox.png",
+        preview: true,
+      },
     ]);
   },
 

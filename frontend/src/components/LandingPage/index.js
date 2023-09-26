@@ -32,8 +32,8 @@ function AllSpots() {
               <div className="city-state">
                 {spot.city}, {spot.state}
               </div>
-              <div className="starReview">
-                <img src={star} className="star"></img>
+              <div className="starReview-LP">
+                <img src={star} alt="star-review" className="star"></img>
                 <div className="review">
                   {spot.avgRating === 0 ? "New" : spot.avgRating}
                 </div>
