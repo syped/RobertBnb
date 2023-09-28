@@ -7,6 +7,7 @@ import LandingPage from "./components/LandingPage";
 import SpotPage from "./components/SpotPage";
 import ManageSpots from "./components/ManageSpots";
 import CreateSpot from "./components/CreateSpot";
+import UpdateSpot from "./components/UpdateSpot";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route path="/spots/new" component={CreateSpot} />
           <Route path="/spots/current" component={ManageSpots} />
+          <Route path="/spots/:spotId/edit" component={UpdateSpot} />
           <Route path="/spot/:spotId" component={SpotPage} />
           <Route>Page Not Found</Route>
         </Switch>

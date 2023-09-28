@@ -23,10 +23,13 @@ const validateSpot = [
   check("country")
     .exists({ checkFalsy: true })
     .withMessage("Country is required"),
+  check("state").exists({ checkFalsy: true }).withMessage("State is required"),
   check("lat")
+    .optional()
     .exists({ checkFalsy: true })
     .withMessage("Latitude is not valid"),
   check("lng")
+    .optional()
     .exists({ checkFalsy: true })
     .withMessage("Longitude is not valid"),
   check("name")

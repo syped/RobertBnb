@@ -2,6 +2,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { getSpots } from "../../store/spots";
 import { NavLink } from "react-router-dom";
 import star from "../../assets/star.svg";
+import DeleteSpotModal from "../DeleteSpotModal";
+import OpenModalButton from "../OpenModalButton";
 
 function ManageSpots() {
   const allSpots = useSelector((state) => state.spots.allSpots.Spots);
@@ -23,27 +25,35 @@ function ManageSpots() {
       ) : (
         <div className="spots">
           {userSpotsArr.map((spot) => (
-            <NavLink key={spot.id} to={`/spot/${spot.id}`}>
-              <div title={spot.name} className="spot">
-                <div className="image">
-                  <img src={spot.previewImage} alt="spotImg" />
-                </div>
-                <div className="city-state">
-                  {spot.city}, {spot.state}
-                </div>
-                <div className="starReview-LP">
-                  <img src={star} className="star"></img>
-                  <div className="review">
-                    {spot.avgRating === 0 ? "New" : spot.avgRating}
+            <div key={spot.id}>
+              <NavLink to={`/spot/${spot.id}`}>
+                <div title={spot.name} className="spot">
+                  <div className="image">
+                    <img src={spot.previewImage} alt="spotImg" />
                   </div>
+                  <div className="city-state">
+                    {spot.city}, {spot.state}
+                  </div>
+                  <div className="starReview-LP">
+                    <img src={star} alt="" className="star"></img>
+                    <div className="review">
+                      {spot.avgRating === 0 ? "New" : spot.avgRating}
+                    </div>
+                  </div>
+                  <div className="price">${spot.price} night</div>
                 </div>
-                <div className="price">${spot.price} night</div>
-              </div>
+              </NavLink>
               <div className="update-delete">
-                <button>Update</button>
-                <button>Delete</button>
+                <NavLink to={`/spots/${spot.id}/edit`}>
+                  <button>Update</button>
+                </NavLink>
+
+                <OpenModalButton
+                  buttonText="Delete"
+                  modalComponent={<DeleteSpotModal spot={spot} />}
+                />
               </div>
-            </NavLink>
+            </div>
           ))}
         </div>
       )}
