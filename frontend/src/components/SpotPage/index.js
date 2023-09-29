@@ -4,11 +4,13 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SpotPageReviews from "./SpotPageReviews";
 import star from "../../assets/star.svg";
+import { getReviews } from "../../store/reviews";
 
 function SpotDetails() {
   const dispatch = useDispatch();
   const { spotId } = useParams();
   const [isLoaded, setIsLoaded] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const oneSpot = useSelector((state) => state.spots.singleSpot);
 
@@ -23,6 +25,9 @@ function SpotDetails() {
   // if (!oneSpot.SpotImages || !oneSpot.Owner) return null;
   if (oneSpot.id !== parseInt(spotId)) return null;
   // console.log(oneSpot);
+
+  // dispatch(getReviews(spotId));
+  // setRefresh(false);
 
   return (
     <>

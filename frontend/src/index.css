@@ -1,5 +1,195 @@
 /* TODO Add site wide styles */
 
 #root {
-  margin-top: 150px;
+  margin-top: 130px;
+  display: flex;
+  justify-content: center;
+}
+
+.header {
+  background-color: #111;
+  font-family: "Kanit", sans-serif;
+}
+
+body {
+  background-color: #ece8e1;
+  font-family: "Kanit", sans-serif;
+}
+
+.header {
+  display: flex;
+  /* justify-content: space-between; */
+  border-bottom: 1px gray solid;
+  width: 100vw;
+  height: 80px;
+  padding: 0;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background-color: white;
+}
+
+.spots {
+  /* border: 3px dotted red; */
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 360px);
+  justify-content: space-around;
+  gap: 2rem 2rem;
+  width: 85%;
+  max-width: 1800px;
+  margin: 0 auto;
+}
+
+.spots > a {
+  text-decoration: none;
+  color: black;
+}
+
+.image > img {
+  height: 360px;
+  max-width: 100%;
+  object-fit: cover;
+  margin-bottom: 5px;
+}
+
+.spot {
+  /* border: 3px solid green; */
+  height: 450px;
+  /* max-width: fit-content; */
+  /* width: 250px; */
+}
+
+.tooltiptext {
+  opacity: 0;
+  width: 120px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+
+  /* Position the tooltip text - see examples below! */
+  position: absolute;
+  z-index: 1;
+}
+
+.spot:hover {
+  cursor: pointer;
+}
+
+.star {
+  height: 15px;
+}
+
+.city-state {
+  display: inline;
+  float: left;
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+.starReview-LP {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 2px;
+  font-size: 14pt;
+  /* font-weight: bold; */
+}
+
+.price {
+  font-size: 14pt;
+  /* font-weight: bold; */
+  margin-top: 10px;
+}
+
+.header {
+  display: flex;
+  /* justify-content: space-between; */
+  border-bottom: 1px gray solid;
+  width: 100vw;
+  height: 80px;
+  padding: 0;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  background-color: #111;
+}
+
+.header-content {
+  display: flex;
+  /* justify-content: space-between; */
+  /* width: 100vw; */
+  /* padding: 0; */
+  align-items: center;
+  /* position: fixed; */
+  /* top: 0; */
+  /* z-index: 1; */
+  max-width: 1800px;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.create-spot {
+  position: absolute;
+  right: 225px;
+}
+
+.create-spot > a {
+  color: white;
+  text-decoration: none;
+  padding: 15px;
+  background-color: #2b2a29;
+  border-radius: 20px;
+}
+
+body {
+  margin: 0;
+  /* height: 5000px; */
+  min-width: 1024;
+}
+
+.val-logo {
+  height: 75px;
+}
+
+.logincontainer {
+  margin-right: 50px;
+}
+
+.hidden {
+  display: none;
+}
+
+.menu {
+  height: 25px;
+}
+
+.fa-user-circle {
+  font-size: 25px;
+}
+
+.profile-button {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 50px;
+  border-radius: 10px;
+  padding: 10px;
+  position: absolute;
+  right: 50px;
+}
+
+.dropdowncontainer {
+  position: absolute;
+  right: 100px;
+  top: 80px;
+  background-color: white;
+  border: black 1px solid;
+  border-radius: 10px;
+  width: 100px;
+  height: 100px;
 }

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getSpots } from "../../store/spots";
-import { NavLink } from "react-router-dom";
+import { NavLink, Redirect } from "react-router-dom";
 import star from "../../assets/star.svg";
 import DeleteSpotModal from "../DeleteSpotModal";
 import OpenModalButton from "../OpenModalButton";
@@ -14,6 +14,8 @@ function ManageSpots() {
     dispatch(getSpots());
     return null;
   }
+
+  if (!user) return <Redirect to="/"></Redirect>;
 
   const userSpotsArr = allSpots.filter((spot) => spot.ownerId === user.id);
 

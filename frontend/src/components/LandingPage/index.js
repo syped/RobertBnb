@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getSpots } from "../../store/spots";
 import { NavLink } from "react-router-dom";
-import "./LandingPage.css";
+// import "./LandingPage.css";
 import star from "../../assets/star.svg";
 
 function AllSpots() {

@@ -37,7 +37,8 @@ function SignupFormModal() {
         });
     }
     return setErrors({
-      confirmPassword: "Confirm Password field must be the same as the Password field"
+      confirmPassword:
+        "Confirm Password field must be the same as the Password field",
     });
   };
 
@@ -104,10 +105,22 @@ function SignupFormModal() {
             required
           />
         </label>
-        {errors.confirmPassword && (
-          <p>{errors.confirmPassword}</p>
-        )}
-        <button type="submit">Sign Up</button>
+        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
+        <button
+          disabled={
+            !firstName ||
+            !lastName ||
+            !email ||
+            !username ||
+            !password ||
+            !confirmPassword ||
+            username.length < 4 ||
+            password.length < 6
+          }
+          type="submit"
+        >
+          Sign Up
+        </button>
       </form>
     </>
   );

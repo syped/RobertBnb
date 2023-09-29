@@ -1,6 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getReviews } from "../../store/reviews";
+import OpenModalButton from "../OpenModalButton";
+import PostReview from "../PostReview";
+import DeleteReview from "../DeleteReview";
 
 function SpotReviews({ spotId, oneSpot }) {
   const dispatch = useDispatch();
@@ -23,14 +26,30 @@ function SpotReviews({ spotId, oneSpot }) {
     return null;
   }
 
+  if (!sessionUser) {
+    return null;
+  }
+
+  const userReview = spotReviews.find(
+    (review) => review.userId === sessionUser.id
+  );
+
   // if (spotReviews[0].spotId !== parseInt(spotId)) return null;
 
   // const dateMaker = () => {
   //   const date = newDate(review.createdAt);
   // };
 
+  // if (!review.User) return null;
+
   return (
     <>
+      {sessionUser && !userReview && oneSpot.Owner.id !== sessionUser.id ? (
+        <OpenModalButton
+          buttonText="Post Your Review"
+          modalComponent={<PostReview user={sessionUser} spot={oneSpot} />}
+        />
+      ) : null}
       <div className="review-section">
         {spotReviews.length === 0 &&
         sessionUser !== null &&
@@ -40,7 +59,7 @@ function SpotReviews({ spotId, oneSpot }) {
           spotReviews
             .map((review) => (
               <div key={review.id} className="review">
-                <div>{review.User.firstName}</div>
+                <div>{review?.User?.firstName}</div>
                 <div>
                   {new Date(review.createdAt).toLocaleDateString("en-US", {
                     year: "numeric",
@@ -48,6 +67,14 @@ function SpotReviews({ spotId, oneSpot }) {
                   })}
                 </div>
                 <div>{review.review}</div>
+                {sessionUser.id === review.User.id ? (
+                  <OpenModalButton
+                    buttonText="Delete"
+                    modalComponent={
+                      <DeleteReview review={review} spot={oneSpot} />
+                    }
+                  />
+                ) : null}
               </div>
             ))
             .reverse()

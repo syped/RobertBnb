@@ -26,6 +26,19 @@ function UpdateSpot() {
   }, [dispatch, spotId]);
 
   useEffect(() => {
+    setAddress(spot.address || "");
+    setCountry(spot.country || "");
+    setCity(spot.city || "");
+    setState(spot.state || "");
+    setDescription(spot.description || "");
+    setName(spot.name || "");
+    setPrice(spot.price || "");
+  }, [spot]);
+
+  const submitUpdatedSpot = async (e) => {
+    e.preventDefault();
+    setHasSubmitted(true);
+
     const errors = {};
 
     if (!address) errors.address = "Street address is required";
@@ -40,11 +53,6 @@ function UpdateSpot() {
     if (!price) errors.price = "Price per day is required";
 
     setValidationErrors(errors);
-  }, [address, city, country, state, name, description, price]);
-
-  const submitUpdatedSpot = async (e) => {
-    e.preventDefault();
-    setHasSubmitted(true);
 
     const updatedSpot = {
       id: spot.id,
