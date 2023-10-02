@@ -47,38 +47,56 @@ function ProfileButton({ user }) {
     <>
       {sessionUser ? (
         <>
-          <button onClick={openMenu} className="profile-button">
-            <img src={menuicon} className="menu"></img>
-            <i className="fas fa-user-circle" />
-          </button>
-          <div className={ulClassName} ref={ulRef}>
-            <div className="dropdowncontainer">
-              <div>{sessionUser.username}</div>
-              <div>Hello {sessionUser.firstName}</div>
-              <div>{sessionUser.email}</div>
-              <NavLink to="/spots/current">Manage Spots</NavLink>
-              <div>
-                <button onClick={logout}>Log Out</button>
+          <div className="menu">
+            <button onClick={openMenu} className="profile-button">
+              {/* <img src={menuicon} className="menu"></img> */}
+              <i className="fa fa-bars"></i>
+              <i className="fas fa-user-circle" />
+            </button>
+            <div className="underline"></div>
+            <div className={ulClassName} ref={ulRef}>
+              <div className="dropdowncontainer move">
+                <div className="menu-user">{sessionUser.username}</div>
+                <div className="menu-name">Hello {sessionUser.firstName}</div>
+                <div className="menu-email">{sessionUser.email}</div>
+                <div className="manage-spots-button">
+                  <NavLink className="manage-spots-link" to="/spots/current">
+                    Manage Spots
+                  </NavLink>
+                </div>
+                <div>
+                  <button className="log-out-button" onClick={logout}>
+                    Log Out
+                  </button>
+                </div>
               </div>
             </div>
           </div>
         </>
       ) : (
         <>
-          <button onClick={openMenu} className="profile-button">
-            <img src={menuicon} className="menu"></img>
-            <i className="fas fa-user-circle" />
-          </button>
-          <div className={ulClassName} ref={ulRef}>
-            <div className="dropdowncontainer">
-              <OpenModalButton
-                buttonText="Log In"
-                modalComponent={<LoginFormModal />}
-              />
-              <OpenModalButton
-                buttonText="Sign Up"
-                modalComponent={<SignupFormModal />}
-              />
+          <div className="menu">
+            <button onClick={openMenu} className="profile-button">
+              {/* <img src={menuicon} className="menu"></img> */}
+              <i className="fa fa-bars"></i>
+              <i className="fas fa-user-circle" />
+            </button>
+            <div className="underline"></div>
+            <div className={ulClassName} ref={ulRef}>
+              <div className="dropdowncontainer move">
+                <div className="sign-up-button">
+                  <OpenModalButton
+                    buttonText="Sign Up"
+                    modalComponent={<SignupFormModal />}
+                  />
+                </div>
+                <div className="log-in-button">
+                  <OpenModalButton
+                    buttonText="Log In"
+                    modalComponent={<LoginFormModal />}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </>

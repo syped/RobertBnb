@@ -38,7 +38,7 @@ module.exports = {
       },
       {
         spotId: 4,
-        url: "https://static.wikia.nocookie.net/valorant/images/1/13/Loading_Screen_Icebox.png",
+        url: "https://images.contentstack.io/v3/assets/bltb6530b271fddd0b1/blt5e0cc85764d7ef63/621df5532f7a0b2e3f26c59b/Icebox_Updates_5.jpg",
         preview: true,
       },
     ]);

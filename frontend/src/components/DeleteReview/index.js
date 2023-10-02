@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 // import { deleteOneSpot } from "../../store/spots";
 import { getReviews, removeOneReview } from "../../store/reviews";
 import { useDispatch } from "react-redux";
@@ -9,6 +9,10 @@ function DeleteReviewButton({ review, spot }) {
   const dispatch = useDispatch();
   const { closeModal } = useModal();
   const [exists, setExists] = useState(true);
+
+  useEffect(() => {
+    dispatch(getReviews(spot.id));
+  }, [dispatch, spot]);
 
   const confirmDelete = (e) => {
     e.preventDefault();
@@ -23,20 +27,24 @@ function DeleteReviewButton({ review, spot }) {
   };
 
   dispatch(getSpotDetails(spot.id));
-  dispatch(getReviews(spot.id));
-
-  // useEffect(() => {
-  //   return spots;
-  // }, [spots]);
+  //   useEffect(() => {
+  //     return spot;
+  //   }, [spot]);
 
   return (
     <>
       {exists && (
         <>
-          <h2>Confirm Delete</h2>
-          <div>Are you sure you want to delete this review?</div>
-          <button onClick={confirmDelete}>Yes (Delete Review)</button>
-          <button onClick={cancelDelete}>No (Keep Review)</button>
+          <div className="delete-modal">
+            <h2>Confirm Delete</h2>
+            <div>Are you sure you want to delete this review?</div>
+            <button className="yes-delete" onClick={confirmDelete}>
+              Yes (Delete Review)
+            </button>
+            <button className="no-delete" onClick={cancelDelete}>
+              No (Keep Review)
+            </button>
+          </div>
         </>
       )}
     </>

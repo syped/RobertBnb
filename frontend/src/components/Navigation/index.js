@@ -36,19 +36,22 @@ function Navigation({ isLoaded }) {
   return (
     <div className="header">
       <div className="header-content">
-        <div>
+        <div className="nav-header-left">
           <NavLink exact to="/">
             <img src={logo} className="val-logo"></img>
           </NavLink>
         </div>
-        {sessionUser ? (
-          <div className="nav-menu-right">
-            <div className="create-spot">
-              <NavLink to="/spots/new">Create a new Spot</NavLink>
-            </div>
-          </div>
-        ) : null}
-        {isLoaded && <ProfileButton></ProfileButton>}
+        <div className="nav-header-right">
+          {sessionUser ? (
+            <>
+              <div className="create-spot">
+                <NavLink to="/spots/new">Create a new Spot</NavLink>
+              </div>
+              <div className="underline"></div>
+            </>
+          ) : null}
+          {isLoaded && <ProfileButton></ProfileButton>}
+        </div>
       </div>
     </div>
   );

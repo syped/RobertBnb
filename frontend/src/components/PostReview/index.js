@@ -11,6 +11,9 @@ function PostReview({ user, spot }) {
   const [hasSubmitted, setHasSubmitted] = useState(false);
   const dispatch = useDispatch();
   const { closeModal } = useModal();
+  const [disabled, setDisabled] = useState(false);
+  const [activeRating, setActiveRating] = useState(rating);
+  // const [onChange, onChange] = useState(0);
 
   //   useEffect(() => {
   //     const errors = {};
@@ -20,6 +23,10 @@ function PostReview({ user, spot }) {
 
   //     setValidationErrors(errors);
   //   }, [comment, rating]);
+
+  const onChange = (number) => {
+    setRating(parseInt(number));
+  };
 
   const submitReview = async (e) => {
     e.preventDefault();
@@ -43,9 +50,9 @@ function PostReview({ user, spot }) {
       }
     );
     dispatch(getReviews(spot.id));
-    dispatch(getSpotDetails(spot.id));
+    await dispatch(getSpotDetails(spot.id));
 
-    setHasSubmitted(false);
+    // setHasSubmitted(false);
     closeModal();
 
     setComment("");
@@ -58,7 +65,7 @@ function PostReview({ user, spot }) {
   };
 
   return (
-    <div>
+    <div className="review-modal">
       <h2>How was your stay?</h2>
       <form onSubmit={submitReview}>
         {hasSubmitted && validationErrors.reviews && (
@@ -68,21 +75,98 @@ function PostReview({ user, spot }) {
           <div className="error">{validationErrors.stars}</div>
         )}
         <textarea
+          className="post-comment"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
           placeholder="Leave your review here..."
         />
         <label>
-          <input
+          {/* <input
             value={rating}
             onChange={(e) => setRating(e.target.value)}
             type="range"
             min="1"
             max="5"
-          />
-          Stars
+          /> */}
+          <div className="rating-input">
+            <div
+              className={activeRating >= 1 ? "filled" : "empty"}
+              onMouseEnter={() => {
+                if (!disabled) setActiveRating(1);
+              }}
+              onMouseLeave={() => {
+                if (!disabled) setActiveRating(rating);
+              }}
+              onClick={() => {
+                if (!disabled) onChange(1);
+              }}
+            >
+              <i className="fa fa-star"></i>
+            </div>
+            <div
+              className={activeRating >= 2 ? "filled" : "empty"}
+              onMouseEnter={() => {
+                if (!disabled) setActiveRating(2);
+              }}
+              onMouseLeave={() => {
+                if (!disabled) setActiveRating(rating);
+              }}
+              onClick={() => {
+                if (!disabled) onChange(2);
+              }}
+            >
+              <i className="fa fa-star"></i>
+            </div>
+            <div
+              className={activeRating >= 3 ? "filled" : "empty"}
+              onMouseEnter={() => {
+                if (!disabled) setActiveRating(3);
+              }}
+              onMouseLeave={() => {
+                if (!disabled) setActiveRating(rating);
+              }}
+              onClick={() => {
+                if (!disabled) onChange(3);
+              }}
+            >
+              <i className="fa fa-star"></i>
+            </div>
+            <div
+              className={activeRating >= 4 ? "filled" : "empty"}
+              onMouseEnter={() => {
+                if (!disabled) setActiveRating(4);
+              }}
+              onMouseLeave={() => {
+                if (!disabled) setActiveRating(rating);
+              }}
+              onClick={() => {
+                if (!disabled) onChange(4);
+              }}
+            >
+              <i className="fa fa-star"></i>
+            </div>
+            <div
+              className={activeRating >= 5 ? "filled" : "empty"}
+              onMouseEnter={() => {
+                if (!disabled) setActiveRating(5);
+              }}
+              onMouseLeave={() => {
+                if (!disabled) setActiveRating(rating);
+              }}
+              onClick={() => {
+                if (!disabled) onChange(5);
+              }}
+            >
+              <i className="fa fa-star"></i>
+            </div>
+            Stars
+          </div>
         </label>
-        <button type="submit" disabled={comment.length < 10 || rating === 0}>
+        <button
+          className="submit-review"
+          type="submit"
+          disabled={comment.length < 10 || rating === 0}
+        >
           Submit Your Review
         </button>
       </form>

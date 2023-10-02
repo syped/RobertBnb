@@ -3,7 +3,7 @@ import { getSpotDetails } from "../../store/spots";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import SpotPageReviews from "./SpotPageReviews";
-import star from "../../assets/star.svg";
+import jett from "../../assets/jett.png";
 import { getReviews } from "../../store/reviews";
 
 function SpotDetails() {
@@ -27,12 +27,16 @@ function SpotDetails() {
   // console.log(oneSpot);
 
   // dispatch(getReviews(spotId));
+  // dispatch(getSpotDetails(spotId));
   // setRefresh(false);
+  let imageCount = 1;
 
   return (
     <>
       {isLoaded && (
         <div className="spot-details">
+          <div className="test">VALORANT</div>
+          {/* <img className="jett" src={jett} /> */}
           <div className="spot-name">{oneSpot.name}</div>
           <div className="spot-location">
             <div>
@@ -41,51 +45,61 @@ function SpotDetails() {
           </div>
           <div className="spot-images">
             {oneSpot.SpotImages.map((image) => (
-              <img key={image.id} src={image.url} alt="spot-pic" />
+              <div key={image.id} className={`image${imageCount++}`}>
+                <img src={image.url} alt="spot-pic" />
+              </div>
             ))}
           </div>
           <div className="spot-owner">
             Hosted by {oneSpot.Owner.firstName} {oneSpot.Owner.lastName}
           </div>
-          <div>{oneSpot.description}</div>
+          <div className="detail-container">
+            <div className="spot-description">{oneSpot.description}</div>
 
-          <div className="callout-card">
-            <div>${oneSpot.price} night</div>
-            <div className="starReview-SP">
-              <img src={star} className="star" alt="star-review"></img>
-              <div className="review">
-                {oneSpot.avgRating === 0 ? "New" : oneSpot.avgRating}
+            <div className="callout-card">
+              <div className="price-container">
+                <div className="spot-price">${oneSpot.price}</div> night
               </div>
-            </div>
+              <div className="starReview-SP">
+                {/* <img src={star} className="star" alt="star-review"></img> */}
+                <i className="fa fa-star"></i>
+                <div className="review">
+                  {oneSpot.avgRating === 0 ? "New" : oneSpot.avgRating}
+                </div>
 
-            {oneSpot.avgRating === 0 ? null : (
-              <div>
-                {oneSpot.numReviews === 1 ? (
-                  <div> · {oneSpot.numReviews} Review</div>
-                ) : (
-                  <div> · {oneSpot.numReviews} Reviews</div>
+                {oneSpot.avgRating === 0 ? null : (
+                  <div>
+                    {oneSpot.numReviews === 1 ? (
+                      <div> · {oneSpot.numReviews} Review</div>
+                    ) : (
+                      <div> · {oneSpot.numReviews} Reviews</div>
+                    )}
+                  </div>
                 )}
               </div>
-            )}
-            <button onClick={reserveHandler}>Reserve</button>
+              <button className="reserve-button" onClick={reserveHandler}>
+                Reserve
+              </button>
+            </div>
           </div>
 
           <div className="review-heading">
-            <div className="starReview-SP">
-              <img src={star} className="star" alt="star-review"></img>
+            <div className="starReview-SP review-header">
+              {/* <img src={star} className="star" alt="star-review"></img> */}
+              <i className="fa fa-star"></i>
               <div className="review">
                 {oneSpot.avgRating === 0 ? "New" : oneSpot.avgRating}
               </div>
+              {oneSpot.avgRating === 0 ? null : (
+                <div className="num-reviews">
+                  {oneSpot.numReviews === 1 ? (
+                    <div> · {oneSpot.numReviews} Review</div>
+                  ) : (
+                    <div> · {oneSpot.numReviews} Reviews</div>
+                  )}
+                </div>
+              )}
             </div>
-            {oneSpot.avgRating === 0 ? null : (
-              <div>
-                {oneSpot.numReviews === 1 ? (
-                  <div> · {oneSpot.numReviews} Review</div>
-                ) : (
-                  <div> · {oneSpot.numReviews} Reviews</div>
-                )}
-              </div>
-            )}
           </div>
 
           <SpotPageReviews spotId={spotId} oneSpot={oneSpot} />

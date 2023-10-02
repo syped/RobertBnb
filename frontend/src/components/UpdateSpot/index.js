@@ -32,7 +32,7 @@ function UpdateSpot() {
     setState(spot.state || "");
     setDescription(spot.description || "");
     setName(spot.name || "");
-    setPrice(spot.price || "");
+    setPrice(spot.price || 0);
   }, [spot]);
 
   const submitUpdatedSpot = async (e) => {
@@ -48,37 +48,39 @@ function UpdateSpot() {
     if (!name) errors.name = "Name is required";
     if (name && name.length > 50)
       errors.name = "Name must be less than 50 characters";
-    if (description && description.length < 30)
+    if (!description && description.length < 30)
       errors.description = "Description is required";
     if (!price) errors.price = "Price per day is required";
 
     setValidationErrors(errors);
 
-    const updatedSpot = {
-      id: spot.id,
-      country,
-      address,
-      city,
-      state,
-      description,
-      name,
-      price,
-      lat: 1,
-      lng: 1,
-    };
+    if (Object.keys(errors).length === 0) {
+      const updatedSpot = {
+        id: spot.id,
+        country,
+        address,
+        city,
+        state,
+        description,
+        name,
+        price,
+        lat: 1,
+        lng: 1,
+      };
 
-    if (Object.keys(validationErrors).length === 0) {
       const response = await dispatch(updateOneSpot(updatedSpot));
 
       if (response) {
         history.push(`/spot/${response.id}`);
+      } else {
+        return console.log(validationErrors);
       }
-    }
+    } else console.log(validationErrors);
   };
 
   return (
     <div>
-      <h2>Update your Spot</h2>
+      <h2 className="update-title">Update your Spot</h2>
       <form onSubmit={submitUpdatedSpot}>
         <div className="section-1">
           <h3>Where's your place located?</h3>
@@ -86,7 +88,7 @@ function UpdateSpot() {
             Guests will only get your exact address once they booked a
             reservation.
           </p>
-          <label>
+          <label className="input-name">
             Country
             <input
               value={country}
@@ -99,7 +101,7 @@ function UpdateSpot() {
             <div className="error">{validationErrors.country}</div>
           )}
 
-          <label>
+          <label className="input-name">
             Street Address
             <input
               value={address}
@@ -112,31 +114,35 @@ function UpdateSpot() {
             <div className="error">{validationErrors.address}</div>
           )}
 
-          <label>
-            City
-            <input
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
-              type="text"
-            />
-          </label>
-          {hasSubmitted && validationErrors.city && (
-            <div className="error">{validationErrors.city}</div>
-          )}
+          <div className="input-city-state">
+            <label className="input-name input-city">
+              City
+              <input
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="City"
+                type="text"
+              />
+            </label>
 
-          <label>
-            State
-            <input
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              placeholder="State"
-              type="text"
-            />
-          </label>
-          {hasSubmitted && validationErrors.state && (
-            <div className="error">{validationErrors.state}</div>
-          )}
+            <label className="input-name input-state">
+              State
+              <input
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                placeholder="State"
+                type="text"
+              />
+            </label>
+          </div>
+          <div className="city-state-errors">
+            {hasSubmitted && validationErrors.city && (
+              <div className="error">{validationErrors.city}</div>
+            )}
+            {hasSubmitted && validationErrors.state && (
+              <div className="error">{validationErrors.state}</div>
+            )}
+          </div>
         </div>
         <div className="section-2">
           <h3>Describe your place to guests</h3>
@@ -145,6 +151,7 @@ function UpdateSpot() {
             fast wifi or parking, and what you love about the neighborhood.
           </p>
           <textarea
+            className="input-desc"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Please write atleast 30 characters"
@@ -160,6 +167,7 @@ function UpdateSpot() {
             your place special.
           </p>
           <input
+            className="input-name-field"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name of your spot"
@@ -178,6 +186,7 @@ function UpdateSpot() {
           <label>
             $
             <input
+              className="input-price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Price per night (USD)"

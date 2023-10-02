@@ -103,7 +103,7 @@ function CreateSpot() {
 
           const newImage = {
             url: image,
-            preview: true,
+            preview: false,
           };
 
           if (image) {
@@ -127,8 +127,8 @@ function CreateSpot() {
   };
 
   return (
-    <div>
-      <h2>Create a new Spot</h2>
+    <div className="create-form">
+      <h2 className="create-title">Create a new Spot</h2>
       <form onSubmit={submitSpot}>
         <div className="section-1">
           <h3>Where's your place located?</h3>
@@ -136,7 +136,7 @@ function CreateSpot() {
             Guests will only get your exact address once they booked a
             reservation.
           </p>
-          <label>
+          <label className="input-name">
             Country
             <input
               value={country}
@@ -149,7 +149,7 @@ function CreateSpot() {
             <div className="error">{validationErrors.country}</div>
           )}
 
-          <label>
+          <label className="input-name">
             Street Address
             <input
               value={address}
@@ -162,31 +162,35 @@ function CreateSpot() {
             <div className="error">{validationErrors.address}</div>
           )}
 
-          <label>
-            City
-            <input
-              value={city}
-              onChange={(e) => setCity(e.target.value)}
-              placeholder="City"
-              type="text"
-            />
-          </label>
-          {hasSubmitted && validationErrors.city && (
-            <div className="error">{validationErrors.city}</div>
-          )}
+          <div className="input-city-state">
+            <label className="input-name input-city">
+              City
+              <input
+                value={city}
+                onChange={(e) => setCity(e.target.value)}
+                placeholder="City"
+                type="text"
+              />
+            </label>
 
-          <label>
-            State
-            <input
-              value={state}
-              onChange={(e) => setState(e.target.value)}
-              placeholder="State"
-              type="text"
-            />
-          </label>
-          {hasSubmitted && validationErrors.state && (
-            <div className="error">{validationErrors.state}</div>
-          )}
+            <label className="input-name input-state">
+              State
+              <input
+                value={state}
+                onChange={(e) => setState(e.target.value)}
+                placeholder="State"
+                type="text"
+              />
+            </label>
+          </div>
+          <div className="city-state-errors">
+            {hasSubmitted && validationErrors.city && (
+              <div className="error">{validationErrors.city}</div>
+            )}
+            {hasSubmitted && validationErrors.state && (
+              <div className="error">{validationErrors.state}</div>
+            )}
+          </div>
         </div>
         <div className="section-2">
           <h3>Describe your place to guests</h3>
@@ -194,11 +198,14 @@ function CreateSpot() {
             Mention the best features of your space, any special amentities like
             fast wifi or parking, and what you love about the neighborhood.
           </p>
-          <textarea
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Please write atleast 30 characters"
-          />
+          <div className="input-desc-container">
+            <textarea
+              className="input-desc"
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+              placeholder="Please write atleast 30 characters"
+            />
+          </div>
           {hasSubmitted && validationErrors.description && (
             <div className="error">{validationErrors.description}</div>
           )}
@@ -210,6 +217,7 @@ function CreateSpot() {
             your place special.
           </p>
           <input
+            className="input-name-field"
             value={name}
             onChange={(e) => setName(e.target.value)}
             placeholder="Name of your spot"
@@ -228,6 +236,7 @@ function CreateSpot() {
           <label>
             $
             <input
+              className="input-price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               placeholder="Price per night (USD)"
@@ -242,6 +251,7 @@ function CreateSpot() {
           <h3>Liven up your spot with photos</h3>
           <p>Submit a link to at least one photo to publish your spot.</p>
           <input
+            className="input-previewImage"
             value={previewImage}
             onChange={(e) => setPreviewImage(e.target.value)}
             placeholder="Preview Image URL"
@@ -252,6 +262,7 @@ function CreateSpot() {
           )}
           {imageUrls.map((url, index) => (
             <input
+              className="input-images"
               key={index}
               value={url}
               onChange={(e) => updateImageUrl(e.target.value, index)}
@@ -263,7 +274,9 @@ function CreateSpot() {
             <div className="error">{validationErrors.image}</div>
           )}
         </div>
-        <button type="submit">Create Spot</button>
+        <button className="create-spot-button" type="submit">
+          Create Spot
+        </button>
       </form>
     </div>
   );

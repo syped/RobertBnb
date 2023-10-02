@@ -27,10 +27,16 @@ function DeleteButton({ spot }) {
     <>
       {exists && (
         <>
-          <h2>Confirm Delete</h2>
-          <div>Are you sure you want to remove this spot?</div>
-          <button onClick={confirmDelete}>Yes (Delete Spot)</button>
-          <button onClick={cancelDelete}>No (Keep Spot)</button>
+          <div className="delete-modal">
+            <h2 className="delete-spot">Confirm Delete</h2>
+            <div>Are you sure you want to remove this spot?</div>
+            <button className="yes-delete" onClick={confirmDelete}>
+              Yes (Delete Spot)
+            </button>
+            <button className="no-delete" onClick={cancelDelete}>
+              No (Keep Spot)
+            </button>
+          </div>
         </>
       )}
     </>
