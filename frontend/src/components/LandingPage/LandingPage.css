@@ -1,7 +1,6 @@
 .spots {
   display: flex;
   gap: 20px;
-  margin-top: 150px;
   justify-content: space-around;
 }
 
@@ -43,9 +42,9 @@
   float: left;
 }
 
-.starReview {
+.starReview-LP {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: center;
   gap: 2px;
 }

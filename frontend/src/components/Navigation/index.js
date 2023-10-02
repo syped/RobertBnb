@@ -5,9 +5,8 @@ import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-import "./Navigation.css";
-import drink from "../../assets/drinks-svgrepo-com.png";
-import logo from "../../assets/valorantlogo.png";
+// import "./Navigation.css";
+import logo from "../../assets/valbnb.png";
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -36,12 +35,24 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className="header">
-      <div>
-        <NavLink exact to="/">
-          <img src={logo} className="val-logo"></img>
-        </NavLink>
+      <div className="header-content">
+        <div className="nav-header-left">
+          <NavLink exact to="/">
+            <img src={logo} className="val-logo"></img>
+          </NavLink>
+        </div>
+        <div className="nav-header-right">
+          {sessionUser ? (
+            <>
+              <div className="create-spot">
+                <NavLink to="/spots/new">Create a new Spot</NavLink>
+              </div>
+              <div className="underline"></div>
+            </>
+          ) : null}
+          {isLoaded && <ProfileButton></ProfileButton>}
+        </div>
       </div>
-      {isLoaded && <ProfileButton></ProfileButton>}
     </div>
   );
 }

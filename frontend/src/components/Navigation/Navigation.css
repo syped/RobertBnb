@@ -1,6 +1,6 @@
 .header {
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   border-bottom: 1px gray solid;
   width: 100vw;
   padding: 0;
@@ -9,6 +9,11 @@
   top: 0;
   z-index: 1;
   background-color: white;
+}
+
+.create-spot {
+  position: absolute;
+  right: 225px;
 }
 
 body {

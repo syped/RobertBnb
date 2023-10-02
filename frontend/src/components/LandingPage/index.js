@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { getSpots } from "../../store/spots";
 import { NavLink } from "react-router-dom";
-import "./LandingPage.css";
+// import "./LandingPage.css";
 import star from "../../assets/star.svg";
 
 function AllSpots() {
@@ -32,13 +32,16 @@ function AllSpots() {
               <div className="city-state">
                 {spot.city}, {spot.state}
               </div>
-              <div className="starReview">
-                <img src={star} className="star"></img>
+              <div className="starReview-LP">
+                {/* <img src={star} alt="star-review" className="star"></img> */}
+                <i className="fa fa-star"></i>
                 <div className="review">
                   {spot.avgRating === 0 ? "New" : spot.avgRating}
                 </div>
               </div>
-              <div className="price">${spot.price} night</div>
+              <div className="price-night">
+                <div className="price">${spot.price}</div> night
+              </div>
             </div>
           </NavLink>
         ))}
